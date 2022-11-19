@@ -1,0 +1,38 @@
+body{
+  background-color: #ffd700;
+}
+
+.app__header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.dropdown {
+  font-weight: 600 !important;
+  background-color: rgb(17, 203, 255) !important;
+  color: #011 !important;
+}
+Select {
+  color: #ffd700  !important;
+}
+.app{
+  display: flex;
+  justify-content: space-evenly;
+  padding: 15px;
+}
+
+.app__left {
+  flex: 0.9;
+}
+
+.app__stats{
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 989px) {
+  .app{
+    flex-direction: column;
+  }
+}
