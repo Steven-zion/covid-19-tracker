@@ -13,33 +13,33 @@ const options = {
     },
     maintainAspectRatio: false,
     tooltips: {
-        mode: "index",
+        mode: 'index',
         intersect: false,
         callbacks: {
             label: function (tooltipItem, data) {
-                return numeral(tooltipItem.value).format("+0,0");
+                return numeral(tooltipItem.value).format('+0,0')
             },
         },
     },
     scales: {
         xAxes: [
             {
-                type: "time",
-                time: {
-                    format: "MM/DD/YY",
-                    tooltipFormat: "ll",
-                },
-            },
-        ],
-        yAxes: [
-            {
                 gridLines: {
                     display: false,
                 },
                 ticks: {
                     callback: function (value, index, values) {
-                        return numeral(value).format("0a");
+                        return numeral(value).format('0a');
                     },
+                },
+            },
+        ],
+        yAxes: [
+            {
+                type: 'time',
+                time: {
+                    format: 'HH:mm:ss',
+                    tooltipFormat: 'll',
                 },
             },
         ],
@@ -52,15 +52,15 @@ const LineGraph = ({ casesType="cases" }) => {
     const buildChartData = (data, caseType) => {
         const chartData = []
         let lastPoint;
-        for(let date in data.cases){
+        for(let time in data.cases){
             if(lastPoint) {
                 const newPoint = {
-                    x: date,
-                    y: data[caseType][date] - lastPoint
+                    x: data[caseType][time] - lastPoint,
+                    y: time
                 }
                 chartData.push(newPoint)
             }
-            lastPoint = data[caseType][date]
+            lastPoint = data[caseType][time]
         }
         return chartData
     }
@@ -86,7 +86,7 @@ const LineGraph = ({ casesType="cases" }) => {
                     data={{
                         datasets: [{
                             backgroundColor: "rgba(204, 16, 52, 0.5)",
-                            borderColor: "#CC1034", 
+                            borderColor: "#001", 
                             data: data
                         }]
                     }}  

@@ -14,13 +14,23 @@ function App() {
   const [country, setCountry] = useState('worldwide')
   const [countryInfo, setCountryInfo] = useState({})
   const [tableData, setTableData] = useState([])
-  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 })
+  const [mapCenter, setMapCenter] = useState({ lat: 1.2921, lng: 36.8219 })
   const [mapZoom, setMapZoom] = useState(3)
   const [mapCountries, setMapCountries] = useState([])
   const [casesType, setCasesType] = useState("cases");
+
+  const options = {
+      method: 'GET',
+      url: 'https://covid-193.p.rapidapi.com/statistics',
+      headers: {
+          'X-RapidAPI-Key':
+              process.env.COVID19_APP_RAPID_API_KEY,
+          'X-RapidAPI-Host': 'covid-193.p.rapidapi.com',
+      },
+  };
   useEffect(() => {
     const getData = async () => {
-      await fetch("https://disease.sh/v3/covid-19/countries")
+      await fetch("https://disease.sh/v3/covid-19/countries", options)
         .then(response => response.json())
         .then(data => {
           const countries = data.map(item => (
@@ -36,7 +46,7 @@ function App() {
         })
     }
     getData()
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetch('https://disease.sh/v3/covid-19/all')
       .then(response => response.json())
@@ -53,7 +63,7 @@ function App() {
         console.log(data)
         setCountry(e.target.value)
         setCountryInfo(data)
-        setMapCenter([data.countryInfo.lat, data.countryInfo.long])
+        setMapCenter(!mapCenter ? [data.countryInfo.lat, data.countryInfo.long] : { lat: 1.2921, lng: 36.8219 })
         setMapZoom(4)
       })
   }
@@ -69,7 +79,7 @@ function App() {
                           value={country}
                           onChange={onCountryChange}
                       >
-                          <MenuItem className="dropdown" value="worldwide">
+                          <MenuItem className="dropdown" name="worldwide" value="worldwide">
                               Worldwide
                           </MenuItem>
                           {countries.map((country) => (
